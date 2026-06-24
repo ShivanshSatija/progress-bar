@@ -8,6 +8,7 @@ import Notes from './components/Notes'
 import Todos from './components/Todos'
 import Motivation from './components/Motivation'
 import Pomodoro from './components/Pomodoro'
+import PyDSA from './components/PyDSA'
 import SearchModal from './components/SearchModal'
 
 const NAV = [
@@ -22,6 +23,7 @@ const NAV = [
   { id: 'development', label: 'Development', icon: '💻' },
   { id: 'placement', label: 'Placement', icon: '🎯' },
   { id: 'sep2', divider: 'Tools' },
+  { id: 'pydsa', label: 'Py DSA', icon: '🐍' },
   { id: 'pomodoro', label: 'Pomodoro', icon: '⏱️' },
   { id: 'notes', label: 'Notes', icon: '📝' },
   { id: 'todos', label: 'To-Do', icon: '✅' },
@@ -90,6 +92,7 @@ export default function App() {
               {view === 'today' && <TodayView />}
               {view === 'planner' && <DailyPlanner />}
               {TRACK_MAP[view] && <TrackView category={TRACK_MAP[view]} />}
+              {view === 'pydsa' && <PyDSA />}
               {view === 'pomodoro' && <Pomodoro />}
               {view === 'notes' && <Notes />}
               {view === 'todos' && <Todos />}
