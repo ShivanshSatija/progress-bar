@@ -26,7 +26,15 @@ Built with **React (Vite) + Tailwind CSS**.
 
 ---
 
-## 🚀 Easiest way: launch it like a desktop app
+## 🌐 Use it online (no setup)
+
+**Live app: https://shivanshsatija.github.io/progress-bar/**
+
+Open that link in Chrome/Edge and click the **install icon** in the address bar to add it as an app on your desktop or phone — it always works, no server needed. Every `git push` to `main` auto-redeploys it.
+
+---
+
+## 🚀 Or run it locally like a desktop app
 
 Double-click **`Launch 90-Day Mission.bat`** in this folder. It will:
 
