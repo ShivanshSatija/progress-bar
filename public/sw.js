@@ -19,7 +19,8 @@ self.addEventListener('fetch', (e) => {
         const cached = await cache.match(request)
         if (cached) return cached
         if (request.mode === 'navigate') {
-          const shell = await cache.match('/')
+          const shell =
+            (await cache.match(self.registration.scope)) || (await cache.match('./'))
           if (shell) return shell
         }
         return Response.error()

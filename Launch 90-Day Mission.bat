@@ -6,6 +6,9 @@ echo ============================================
 echo    90-DAY PLACEMENT MISSION - Launcher
 echo ============================================
 echo.
+echo TIP: Your app is also online (no setup needed):
+echo      https://shivanshsatija.github.io/progress-bar/
+echo.
 
 REM First run: install dependencies
 if not exist "node_modules" (
@@ -15,19 +18,12 @@ if not exist "node_modules" (
   echo.
 )
 
-REM Build the app if it hasn't been built yet
-if not exist "dist" (
-  echo Building the app...
-  call npm run build
-  echo.
-)
-
 echo Launching your app... your browser will open automatically.
 echo Keep THIS window open while you use the app.
 echo To close the app later, just close this window.
 echo.
 
-REM Serve the built app and open the browser
-call npm run preview
+REM Start the app (opens the browser at http://localhost:5173)
+call npm run dev
 
 pause
