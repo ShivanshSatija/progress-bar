@@ -4,6 +4,12 @@ export const PART1 = {
   'two-sum': {
     approach: 'Hash map storing value -> index; check complement in one pass.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Walk through the array once.',
+      'For each number compute target minus it.',
+      'If complement was seen, return both indices.',
+      'Otherwise store the number with its index.',
+    ],
     code: `def two_sum(nums, target):
     seen = {}
     for i, x in enumerate(nums):
@@ -15,6 +21,11 @@ export const PART1 = {
   'best-time-to-buy-and-sell-stock': {
     approach: 'Track the minimum price so far and the best profit selling today.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Track the lowest price seen so far.',
+      'For each day compute profit versus that low.',
+      'Keep the best profit found.',
+    ],
     code: `def max_profit(prices):
     min_price = float('inf')
     best = 0
@@ -28,12 +39,22 @@ export const PART1 = {
   'contains-duplicate': {
     approach: 'Compare the size of a set of the elements against the list length.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Build a set from the list.',
+      'A set drops duplicate values.',
+      'Different lengths mean a duplicate existed.',
+    ],
     code: `def contains_duplicate(nums):
     return len(set(nums)) != len(nums)`,
   },
   'move-zeroes': {
     approach: 'Two pointers: write index advances only on non-zero, then fill zeros.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Keep a write pointer for non-zeros.',
+      'Swap each non-zero into the write slot.',
+      'Zeros naturally drift to the end.',
+    ],
     code: `def move_zeroes(nums):
     last = 0
     for i in range(len(nums)):
@@ -45,6 +66,11 @@ export const PART1 = {
   'maximum-subarray': {
     approach: 'Kadane: extend the running sum or restart from the current element.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Either extend the running sum or restart.',
+      'Restart when the element alone is bigger.',
+      'Track the best sum seen overall.',
+    ],
     code: `def max_sub_array(nums):
     best = cur = nums[0]
     for x in nums[1:]:
@@ -55,6 +81,11 @@ export const PART1 = {
   'product-of-array-except-self': {
     approach: 'Prefix products pass then suffix products pass without division.',
     complexity: 'O(n) time, O(1) extra space',
+    explanation: [
+      'First pass stores product of left elements.',
+      'Second pass multiplies by product of right elements.',
+      'No division needed.',
+    ],
     code: `def product_except_self(nums):
     n = len(nums)
     res = [1] * n
@@ -71,6 +102,11 @@ export const PART1 = {
   'maximum-product-subarray': {
     approach: 'Track running max and min products since a negative flips them.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Track both running max and min products.',
+      'A negative number swaps which is largest.',
+      'Best comes from element, max times it, or min times it.',
+    ],
     code: `def max_product(nums):
     best = cur_max = cur_min = nums[0]
     for x in nums[1:]:
@@ -83,6 +119,12 @@ export const PART1 = {
   'find-minimum-in-rotated-sorted-array': {
     approach: 'Binary search comparing mid to the right end to pick the side.',
     complexity: 'O(log n) time, O(1) space',
+    explanation: [
+      'Binary search comparing mid to the right end.',
+      'If mid is bigger, minimum lies to the right.',
+      'Otherwise minimum is mid or left of it.',
+      'Converge until lo equals hi.',
+    ],
     code: `def find_min(nums):
     lo, hi = 0, len(nums) - 1
     while lo < hi:
@@ -96,6 +138,11 @@ export const PART1 = {
   'merge-intervals': {
     approach: 'Sort by start, then extend or append based on overlap.',
     complexity: 'O(n log n) time, O(n) space',
+    explanation: [
+      'Sort intervals by start.',
+      'If current overlaps the last, extend its end.',
+      'Otherwise append it as a new interval.',
+    ],
     code: `def merge(intervals):
     intervals.sort()
     res = []
@@ -109,6 +156,11 @@ export const PART1 = {
   'insert-interval': {
     approach: 'Add intervals before, merge all overlapping, then add the rest.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Copy intervals ending before the new one.',
+      'Merge all that overlap the new interval.',
+      'Append the merged interval then the rest.',
+    ],
     code: `def insert(intervals, new_interval):
     res = []
     i, n = 0, len(intervals)
@@ -128,6 +180,11 @@ export const PART1 = {
   'rotate-array': {
     approach: 'Reverse whole array, then reverse the two parts split at k.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Reduce k modulo length.',
+      'Reverse the entire array.',
+      'Reverse first k, then reverse the rest.',
+    ],
     code: `def rotate(nums, k):
     n = len(nums)
     k %= n
@@ -146,6 +203,12 @@ export const PART1 = {
   'set-matrix-zeroes': {
     approach: 'Use first row/column as markers, with a flag for the first column.',
     complexity: 'O(m*n) time, O(1) space',
+    explanation: [
+      'Use first row and column as zero markers.',
+      'A separate flag handles the first column.',
+      'Zero out cells whose marker is set.',
+      'Finally zero the first row and column.',
+    ],
     code: `def set_zeroes(matrix):
     rows, cols = len(matrix), len(matrix[0])
     first_col = False
@@ -171,6 +234,11 @@ export const PART1 = {
   'spiral-matrix': {
     approach: 'Maintain four shrinking boundaries and walk layer by layer.',
     complexity: 'O(m*n) time, O(1) extra space',
+    explanation: [
+      'Keep four boundaries: top, bottom, left, right.',
+      'Walk right, down, left, up each layer.',
+      'Shrink the boundary after each direction.',
+    ],
     code: `def spiral_order(matrix):
     res = []
     top, bottom = 0, len(matrix) - 1
@@ -195,6 +263,11 @@ export const PART1 = {
   'rotate-image': {
     approach: 'Transpose the matrix in place, then reverse each row.',
     complexity: 'O(n^2) time, O(1) space',
+    explanation: [
+      'Transpose by swapping across the diagonal.',
+      'Then reverse each row in place.',
+      'Result is a 90-degree clockwise rotation.',
+    ],
     code: `def rotate(matrix):
     n = len(matrix)
     for r in range(n):
@@ -207,6 +280,12 @@ export const PART1 = {
   '3sum': {
     approach: 'Sort, then for each anchor use two pointers, skipping duplicates.',
     complexity: 'O(n^2) time, O(1) extra space',
+    explanation: [
+      'Sort the array first.',
+      'Fix an anchor, two pointers scan the rest.',
+      'Move pointers based on the triplet sum.',
+      'Skip duplicates to avoid repeats.',
+    ],
     code: `def three_sum(nums):
     nums.sort()
     res = []
@@ -238,6 +317,11 @@ export const PART1 = {
   'valid-anagram': {
     approach: 'Compare character frequency counts of both strings.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Count letter frequencies of each string.',
+      'Anagrams have identical frequency counts.',
+      'Compare the two Counters directly.',
+    ],
     code: `from collections import Counter
 
 
@@ -247,6 +331,11 @@ def is_anagram(s, t):
   'valid-palindrome': {
     approach: 'Two pointers skipping non-alphanumerics, comparing lowercased chars.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Two pointers move from both ends.',
+      'Skip any non-alphanumeric characters.',
+      'Compare lowercased characters; mismatch fails.',
+    ],
     code: `def is_palindrome(s):
     lo, hi = 0, len(s) - 1
     while lo < hi:
@@ -263,6 +352,11 @@ def is_anagram(s, t):
   'valid-parentheses': {
     approach: 'Push opens onto a stack and match each close against the top.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Push opening brackets onto a stack.',
+      'For each close, pop and check it matches.',
+      'Valid only if the stack ends empty.',
+    ],
     code: `def is_valid(s):
     pairs = {')': '(', ']': '[', '}': '{'}
     stack = []
@@ -277,6 +371,11 @@ def is_anagram(s, t):
   'longest-common-prefix': {
     approach: 'Compare min and max strings; their common prefix bounds all others.',
     complexity: 'O(S) time, O(1) space',
+    explanation: [
+      'Take the lexicographic min and max strings.',
+      'Their common prefix bounds every string.',
+      'Compare characters until they differ.',
+    ],
     code: `def longest_common_prefix(strs):
     if not strs:
         return ''
@@ -290,6 +389,12 @@ def is_anagram(s, t):
   'find-the-index-of-the-first-occurrence-in-a-string': {
     approach: 'KMP using a failure table for linear-time substring search.',
     complexity: 'O(n + m) time, O(m) space',
+    explanation: [
+      'Build the needle failure (LPS) table.',
+      'Scan haystack, advancing matches in needle.',
+      'On mismatch, jump back via the LPS table.',
+      'Return start index when full needle matches.',
+    ],
     code: `def str_str(haystack, needle):
     if not needle:
         return 0
@@ -320,6 +425,12 @@ def is_anagram(s, t):
   'string-to-integer-atoi': {
     approach: 'Skip spaces, read optional sign, accumulate digits, then clamp to 32-bit.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Skip leading spaces.',
+      'Read an optional plus or minus sign.',
+      'Accumulate digits into the number.',
+      'Apply sign then clamp to 32-bit range.',
+    ],
     code: `def my_atoi(s):
     i, n = 0, len(s)
     while i < n and s[i] == ' ':
@@ -339,6 +450,11 @@ def is_anagram(s, t):
   'group-anagrams': {
     approach: 'Bucket words by their sorted-character signature in a dict.',
     complexity: 'O(n*k log k) time, O(n*k) space',
+    explanation: [
+      'Sort each word to form a signature key.',
+      'Anagrams share the same sorted key.',
+      'Group words by key in a dict.',
+    ],
     code: `from collections import defaultdict
 
 
@@ -352,6 +468,11 @@ def group_anagrams(strs):
   'longest-substring-without-repeating-characters': {
     approach: 'Sliding window tracking last seen index to jump the left bound.',
     complexity: 'O(n) time, O(min(n, charset)) space',
+    explanation: [
+      'Track each character last seen index.',
+      'On a repeat inside the window, jump left.',
+      'Record the longest window length.',
+    ],
     code: `def length_of_longest_substring(s):
     last = {}
     left = 0
@@ -366,6 +487,12 @@ def group_anagrams(strs):
   'longest-repeating-character-replacement': {
     approach: 'Window valid while size minus max char count stays within k.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Expand window, counting each character.',
+      'Track the most frequent char count.',
+      'Shrink when others exceed k replacements.',
+      'Best window length is the answer.',
+    ],
     code: `from collections import defaultdict
 
 
@@ -386,6 +513,11 @@ def character_replacement(s, k):
   'longest-palindromic-substring': {
     approach: 'Expand around each center for odd and even length palindromes.',
     complexity: 'O(n^2) time, O(1) space',
+    explanation: [
+      'Treat each index as a palindrome center.',
+      'Expand outward for odd and even cases.',
+      'Keep the longest span found.',
+    ],
     code: `def longest_palindrome(s):
     if not s:
         return ''
@@ -406,6 +538,11 @@ def character_replacement(s, k):
   'palindromic-substrings': {
     approach: 'Count palindromes by expanding around every odd and even center.',
     complexity: 'O(n^2) time, O(1) space',
+    explanation: [
+      'Expand around every odd and even center.',
+      'Count each palindrome found while expanding.',
+      'Sum all counts across centers.',
+    ],
     code: `def count_substrings(s):
     n = len(s)
     total = 0
@@ -425,6 +562,12 @@ def character_replacement(s, k):
   'minimum-window-substring': {
     approach: 'Expand a window to cover all needed chars, then shrink to minimize.',
     complexity: 'O(n + m) time, O(charset) space',
+    explanation: [
+      'Count characters needed from t.',
+      'Expand right until all are covered.',
+      'Shrink left to minimize the window.',
+      'Track the smallest valid window.',
+    ],
     code: `from collections import Counter
 
 
@@ -453,6 +596,12 @@ def min_window(s, t):
   'majority-element': {
     approach: 'Boyer-Moore voting maintains a candidate and a count.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Hold a candidate and a counter.',
+      'Pick a new candidate when count hits zero.',
+      'Increment or decrement based on match.',
+      'Surviving candidate is the majority.',
+    ],
     code: `def majority_element(nums):
     count = 0
     candidate = None
@@ -465,6 +614,11 @@ def min_window(s, t):
   'ransom-note': {
     approach: 'Count magazine letters and ensure each note letter is available.',
     complexity: 'O(n + m) time, O(1) space',
+    explanation: [
+      'Count letters in note and magazine.',
+      'Subtract magazine counts from the note.',
+      'Empty result means every letter was available.',
+    ],
     code: `from collections import Counter
 
 
@@ -474,6 +628,11 @@ def can_construct(ransom_note, magazine):
   'valid-sudoku': {
     approach: 'Track seen values per row, column, and 3x3 box in sets.',
     complexity: 'O(1) time, O(1) space',
+    explanation: [
+      'Build unique keys per row, column, box.',
+      'Add each filled value as three keys.',
+      'A repeated key means an invalid board.',
+    ],
     code: `def is_valid_sudoku(board):
     seen = set()
     for r in range(9):
@@ -491,6 +650,11 @@ def can_construct(ransom_note, magazine):
   'top-k-frequent-elements': {
     approach: 'Count frequencies, then bucket by count and read the top k.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Count each number frequency.',
+      'Bucket numbers by their frequency.',
+      'Read buckets high to low for top k.',
+    ],
     code: `from collections import Counter
 
 
@@ -510,6 +674,11 @@ def top_k_frequent(nums, k):
   'subarray-sum-equals-k': {
     approach: 'Count prefix sums; add occurrences of prefix minus k seen so far.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Track running prefix sum.',
+      'Count how often each prefix occurred.',
+      'Add count of prefix minus k each step.',
+    ],
     code: `from collections import defaultdict
 
 
@@ -527,6 +696,12 @@ def subarray_sum(nums, k):
   'longest-consecutive-sequence': {
     approach: 'Use a set and only start counting from a sequence start value.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Put all numbers into a set.',
+      'Only start counting at a sequence start.',
+      'Walk upward counting consecutive numbers.',
+      'Keep the longest run found.',
+    ],
     code: `def longest_consecutive(nums):
     num_set = set(nums)
     best = 0
@@ -543,6 +718,12 @@ def subarray_sum(nums, k):
   'remove-duplicates-from-sorted-array': {
     approach: 'Slow pointer writes the next unique value found by the fast pointer.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Slow pointer marks last unique value.',
+      'Fast pointer scans for a new value.',
+      'Write new values just after slow.',
+      'Return slow plus one as the count.',
+    ],
     code: `def remove_duplicates(nums):
     if not nums:
         return 0
@@ -556,6 +737,12 @@ def subarray_sum(nums, k):
   'two-sum-ii-input-array-is-sorted': {
     approach: 'Two pointers move inward based on the sum versus target.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Two pointers start at both ends.',
+      'If sum is low, move left pointer right.',
+      'If sum is high, move right pointer left.',
+      'Return indices when the sum matches.',
+    ],
     code: `def two_sum(numbers, target):
     lo, hi = 0, len(numbers) - 1
     while lo < hi:
@@ -571,6 +758,12 @@ def subarray_sum(nums, k):
   'container-with-most-water': {
     approach: 'Two pointers from the ends, moving the shorter wall inward.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Two pointers at the far ends.',
+      'Area uses width times shorter wall.',
+      'Move the shorter wall inward each step.',
+      'Track the largest area seen.',
+    ],
     code: `def max_area(height):
     lo, hi = 0, len(height) - 1
     best = 0
@@ -585,6 +778,12 @@ def subarray_sum(nums, k):
   '3sum-closest': {
     approach: 'Sort, then for each anchor use two pointers tracking the closest sum.',
     complexity: 'O(n^2) time, O(1) space',
+    explanation: [
+      'Sort the array.',
+      'Fix an anchor, two pointers scan the rest.',
+      'Track the sum closest to target.',
+      'Move pointers toward the target.',
+    ],
     code: `def three_sum_closest(nums, target):
     nums.sort()
     n = len(nums)
@@ -606,6 +805,11 @@ def subarray_sum(nums, k):
   'trapping-rain-water': {
     approach: 'Two pointers tracking left/right maxes; fill from the lower side.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Two pointers track left and right maxes.',
+      'Process the side with the lower wall.',
+      'Add trapped water above each bar.',
+    ],
     code: `def trap(height):
     lo, hi = 0, len(height) - 1
     left_max = right_max = 0
@@ -626,6 +830,12 @@ def subarray_sum(nums, k):
   'maximum-average-subarray-i': {
     approach: 'Maintain a fixed-size window sum and track its maximum.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Sum the first k elements.',
+      'Slide by adding new and dropping old.',
+      'Track the maximum window sum.',
+      'Divide the best sum by k.',
+    ],
     code: `def find_max_average(nums, k):
     window = sum(nums[:k])
     best = window
@@ -637,6 +847,11 @@ def subarray_sum(nums, k):
   'minimum-size-subarray-sum': {
     approach: 'Grow the window, shrinking from the left while the sum meets target.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Grow the window adding each element.',
+      'While sum meets target, record length.',
+      'Shrink from the left to minimize.',
+    ],
     code: `def min_sub_array_len(target, nums):
     left = 0
     total = 0
@@ -652,6 +867,12 @@ def subarray_sum(nums, k):
   'permutation-in-string': {
     approach: 'Slide a fixed window and compare its char counts to the pattern.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Count characters needed from s1.',
+      'Slide a fixed-size window over s2.',
+      'Add right char, drop left char each step.',
+      'Match when window counts equal need.',
+    ],
     code: `from collections import Counter
 
 
@@ -675,6 +896,12 @@ def check_inclusion(s1, s2):
   'find-all-anagrams-in-a-string': {
     approach: 'Slide a fixed window, comparing its counts to the pattern counts.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Count characters needed from p.',
+      'Slide a fixed-size window over s.',
+      'Add right char, drop left char each step.',
+      'Record index when counts match need.',
+    ],
     code: `from collections import Counter
 
 
@@ -699,6 +926,12 @@ def find_anagrams(s, p):
   'sliding-window-maximum': {
     approach: 'Monotonic deque of indices holding candidates in decreasing order.',
     complexity: 'O(n) time, O(k) space',
+    explanation: [
+      'Deque holds indices in decreasing value.',
+      'Pop smaller values before adding each index.',
+      'Drop the front when it leaves the window.',
+      'Front index is the current window max.',
+    ],
     code: `from collections import deque
 
 

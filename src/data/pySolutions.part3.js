@@ -4,6 +4,11 @@ export const PART3 = {
   'last-stone-weight': {
     approach: 'Max-heap (negated) repeatedly smashes the two heaviest stones.',
     complexity: 'O(n log n) time, O(n) space',
+    explanation: [
+      'Negate stones into a max-heap.',
+      'Pop two heaviest, push back their difference.',
+      'Repeat until one or zero stones remain.',
+    ],
     code: `import heapq
 
 def last_stone_weight(stones):
@@ -19,6 +24,11 @@ def last_stone_weight(stones):
   'kth-largest-element-in-a-stream': {
     approach: 'Maintain a min-heap of size k so the root is always the kth largest.',
     complexity: 'O(log k) per add, O(k) space',
+    explanation: [
+      'Keep a min-heap trimmed to size k.',
+      'On add, push then pop if oversized.',
+      'Heap root is the kth largest.',
+    ],
     code: `import heapq
 
 class KthLargest:
@@ -38,6 +48,10 @@ class KthLargest:
   'kth-largest-element-in-an-array': {
     approach: 'Min-heap of size k keeps the k largest seen so far; root is the answer.',
     complexity: 'O(n log k) time, O(k) space',
+    explanation: [
+      'Grab the k largest numbers via nlargest.',
+      'The last of those is the kth largest.',
+    ],
     code: `import heapq
 
 def find_kth_largest(nums, k):
@@ -46,6 +60,11 @@ def find_kth_largest(nums, k):
   'k-closest-points-to-origin': {
     approach: 'Use a max-heap of size k keyed by negative squared distance.',
     complexity: 'O(n log k) time, O(k) space',
+    explanation: [
+      'Push each point keyed by negative distance.',
+      'Pop when heap exceeds size k.',
+      'Remaining k points are the closest.',
+    ],
     code: `import heapq
 
 def k_closest(points, k):
@@ -60,6 +79,11 @@ def k_closest(points, k):
   'task-scheduler': {
     approach: 'Greedy formula: most frequent task defines idle slots filled by others.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Count tasks; find the max frequency.',
+      'Build frame of gaps from the most frequent.',
+      'Answer is max of frame size and task count.',
+    ],
     code: `from collections import Counter
 
 def least_interval(tasks, n):
@@ -71,6 +95,12 @@ def least_interval(tasks, n):
   'find-median-from-data-stream': {
     approach: 'Two heaps (max-heap low half, min-heap high half) kept balanced.',
     complexity: 'O(log n) add, O(1) find, O(n) space',
+    explanation: [
+      'Low max-heap holds smaller half.',
+      'High min-heap holds larger half.',
+      'Rebalance so sizes differ by at most one.',
+      'Median is a top, or average of tops.',
+    ],
     code: `import heapq
 
 class MedianFinder:
@@ -94,6 +124,11 @@ class MedianFinder:
   'jump-game': {
     approach: 'Track the farthest reachable index; fail if a position is unreachable.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Track the farthest index reachable so far.',
+      'Fail if current index passes that reach.',
+      'Extend reach at each step.',
+    ],
     code: `def can_jump(nums):
     reach = 0
     for i, step in enumerate(nums):
@@ -105,6 +140,11 @@ class MedianFinder:
   'jump-game-ii': {
     approach: 'BFS-style greedy: extend the current jump window when its end is hit.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Track farthest reach within current window.',
+      'When window end is hit, take a jump.',
+      'Reset window end to the farthest reach.',
+    ],
     code: `def jump(nums):
     jumps = 0
     cur_end = 0
@@ -119,6 +159,11 @@ class MedianFinder:
   'gas-station': {
     approach: 'If total gas >= total cost, the start is where running tank dips lowest.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'If total gas under total cost, impossible.',
+      'Accumulate net gas while scanning.',
+      'Reset start whenever the tank goes negative.',
+    ],
     code: `def can_complete_circuit(gas, cost):
     if sum(gas) < sum(cost):
         return -1
@@ -134,6 +179,11 @@ class MedianFinder:
   'hand-of-straights': {
     approach: 'Greedily form consecutive groups starting from the smallest available card.',
     complexity: 'O(n log n) time, O(n) space',
+    explanation: [
+      'Count cards; min-heap of distinct values.',
+      'Always start a run at the smallest card.',
+      'Consume consecutive values, failing if missing.',
+    ],
     code: `from collections import Counter
 import heapq
 
@@ -158,6 +208,12 @@ def is_n_straight_hand(hand, group_size):
   'valid-parenthesis-string': {
     approach: 'Track the range [low, high] of possible open-paren counts as we scan.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Track min and max possible open counts.',
+      'Stars widen the range both directions.',
+      'Fail if max drops below zero.',
+      'Valid if min can reach zero.',
+    ],
     code: `def check_valid_string(s):
     low = high = 0
     for ch in s:
@@ -178,6 +234,11 @@ def is_n_straight_hand(hand, group_size):
   'partition-labels': {
     approach: 'Record each char last index; extend partition until reaching its end.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Record each character last occurrence.',
+      'Extend partition end to last seen char.',
+      'Cut when index reaches partition end.',
+    ],
     code: `def partition_labels(s):
     last = {ch: i for i, ch in enumerate(s)}
     result = []
@@ -192,6 +253,11 @@ def is_n_straight_hand(hand, group_size):
   'merge-triplets-to-form-target-triplet': {
     approach: 'Keep triplets not exceeding target; check each target coord is achievable.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Ignore triplets exceeding target anywhere.',
+      'For valid ones, mark coords that match.',
+      'Succeed if all three coords matched.',
+    ],
     code: `def merge_triplets(triplets, target):
     found = set()
     for t in triplets:
@@ -206,6 +272,11 @@ def is_n_straight_hand(hand, group_size):
   'find-if-path-exists-in-graph': {
     approach: 'Union-Find: connect each edge, then check both vertices share a root.',
     complexity: 'O(E * alpha(V)) time, O(V) space',
+    explanation: [
+      'Union the endpoints of every edge.',
+      'Find uses path compression.',
+      'Path exists if source and destination share root.',
+    ],
     code: `def valid_path(n, edges, source, destination):
     parent = list(range(n))
 
@@ -222,6 +293,11 @@ def is_n_straight_hand(hand, group_size):
   'number-of-islands': {
     approach: 'DFS flood-fill each unvisited land cell, counting connected components.',
     complexity: 'O(m*n) time, O(m*n) space',
+    explanation: [
+      'Scan grid for unvisited land cells.',
+      'DFS sinks the whole island to zero.',
+      'Count one island per new DFS start.',
+    ],
     code: `def num_islands(grid):
     if not grid:
         return 0
@@ -247,6 +323,11 @@ def is_n_straight_hand(hand, group_size):
   'number-of-provinces': {
     approach: 'Union-Find on the adjacency matrix; count distinct connected roots.',
     complexity: 'O(n^2) time, O(n) space',
+    explanation: [
+      'Union every connected pair in the matrix.',
+      'Find uses path compression.',
+      'Count nodes that are their own root.',
+    ],
     code: `def find_circle_num(is_connected):
     n = len(is_connected)
     parent = list(range(n))
@@ -266,6 +347,11 @@ def is_n_straight_hand(hand, group_size):
   'max-area-of-island': {
     approach: 'DFS each land cell, summing area and sinking visited cells.',
     complexity: 'O(m*n) time, O(m*n) space',
+    explanation: [
+      'DFS returns area of one island.',
+      'Sink each visited cell to zero.',
+      'Track the maximum area seen.',
+    ],
     code: `def max_area_of_island(grid):
     rows, cols = len(grid), len(grid[0])
 
@@ -285,6 +371,11 @@ def is_n_straight_hand(hand, group_size):
   'clone-graph': {
     approach: 'DFS with a map from original nodes to their clones to handle cycles.',
     complexity: 'O(V+E) time, O(V) space',
+    explanation: [
+      'Map each original node to its clone.',
+      'Return existing clone to handle cycles.',
+      'Recurse on neighbors, linking the copies.',
+    ],
     code: `# Node has attributes .val and .neighbors (list of Node)
 def clone_graph(node):
     if not node:
@@ -305,6 +396,11 @@ def clone_graph(node):
   'rotting-oranges': {
     approach: 'Multi-source BFS from all rotten oranges; track minutes until none fresh.',
     complexity: 'O(m*n) time, O(m*n) space',
+    explanation: [
+      'Queue all rotten oranges; count fresh ones.',
+      'BFS one minute per level, rotting neighbors.',
+      'Return minutes, or -1 if fresh remain.',
+    ],
     code: `from collections import deque
 
 def oranges_rotting(grid):
@@ -333,6 +429,11 @@ def oranges_rotting(grid):
   'pacific-atlantic-water-flow': {
     approach: 'DFS upward from each ocean border; answer is cells reachable from both.',
     complexity: 'O(m*n) time, O(m*n) space',
+    explanation: [
+      'DFS inland from each ocean border.',
+      'Only climb to equal or higher cells.',
+      'Answer is the intersection of both sets.',
+    ],
     code: `def pacific_atlantic(heights):
     rows, cols = len(heights), len(heights[0])
     pacific, atlantic = set(), set()
@@ -356,6 +457,11 @@ def oranges_rotting(grid):
   'surrounded-regions': {
     approach: 'Mark border-connected O regions safe via DFS, then flip the rest to X.',
     complexity: 'O(m*n) time, O(m*n) space',
+    explanation: [
+      'DFS from border Os, marking them safe.',
+      'Flip remaining enclosed Os to X.',
+      'Restore safe cells back to O.',
+    ],
     code: `def solve(board):
     if not board:
         return
@@ -383,6 +489,12 @@ def oranges_rotting(grid):
   'course-schedule': {
     approach: 'Topological sort via Kahn BFS; a valid order exists iff no cycle.',
     complexity: 'O(V+E) time, O(V+E) space',
+    explanation: [
+      'Build graph and indegree counts.',
+      'Queue courses with zero indegree.',
+      'Process, decrementing neighbor indegrees.',
+      'Finishable if all courses get processed.',
+    ],
     code: `from collections import deque
 
 def can_finish(num_courses, prerequisites):
@@ -405,6 +517,12 @@ def can_finish(num_courses, prerequisites):
   'course-schedule-ii': {
     approach: 'Kahn topological sort; return the order or empty list if a cycle exists.',
     complexity: 'O(V+E) time, O(V+E) space',
+    explanation: [
+      'Build graph and indegree counts.',
+      'Pop zero-indegree nodes into the order.',
+      'Decrement neighbors, queuing new zeros.',
+      'Return order, or empty if a cycle exists.',
+    ],
     code: `from collections import deque
 
 def find_order(num_courses, prerequisites):
@@ -427,6 +545,11 @@ def find_order(num_courses, prerequisites):
   'redundant-connection': {
     approach: 'Union-Find; the first edge joining already-connected nodes is redundant.',
     complexity: 'O(n * alpha(n)) time, O(n) space',
+    explanation: [
+      'Union nodes edge by edge.',
+      'If both already share a root, that edge is redundant.',
+      'Return that first cycle-closing edge.',
+    ],
     code: `def find_redundant_connection(edges):
     parent = list(range(len(edges) + 1))
 
@@ -446,6 +569,11 @@ def find_order(num_courses, prerequisites):
   'word-ladder': {
     approach: 'BFS over words using wildcard patterns as adjacency buckets.',
     complexity: 'O(N * L^2) time, O(N * L) space',
+    explanation: [
+      'Bucket words by each wildcard pattern.',
+      'BFS from begin word over shared patterns.',
+      'Return step count when end word reached.',
+    ],
     code: `from collections import deque, defaultdict
 
 def ladder_length(begin_word, end_word, word_list):
@@ -476,6 +604,11 @@ def ladder_length(begin_word, end_word, word_list):
   'subsets': {
     approach: 'Backtrack including/excluding each index to enumerate all subsets.',
     complexity: 'O(n * 2^n) time, O(n) space',
+    explanation: [
+      'Record the current path as a subset.',
+      'Recurse adding each later element.',
+      'Pop to backtrack and try others.',
+    ],
     code: `def subsets(nums):
     result = []
 
@@ -492,6 +625,11 @@ def ladder_length(begin_word, end_word, word_list):
   'combination-sum': {
     approach: 'Backtrack allowing reuse of each candidate until the target is met.',
     complexity: 'O(2^t) time, O(t) space',
+    explanation: [
+      'Record the path when remaining hits zero.',
+      'Reuse a candidate by recursing at same index.',
+      'Skip candidates larger than remaining.',
+    ],
     code: `def combination_sum(candidates, target):
     result = []
 
@@ -511,6 +649,11 @@ def ladder_length(begin_word, end_word, word_list):
   'permutations': {
     approach: 'Backtrack swapping unused elements into each position.',
     complexity: 'O(n * n!) time, O(n) space',
+    explanation: [
+      'Record path when its length matches input.',
+      'Pick each unused element in turn.',
+      'Mark used, recurse, then unmark.',
+    ],
     code: `def permute(nums):
     result = []
 
@@ -532,6 +675,11 @@ def ladder_length(begin_word, end_word, word_list):
   'subsets-ii': {
     approach: 'Sort, then backtrack skipping duplicate values at the same depth.',
     complexity: 'O(n * 2^n) time, O(n) space',
+    explanation: [
+      'Sort so duplicates sit adjacent.',
+      'Record current path as a subset.',
+      'Skip repeated values at the same level.',
+    ],
     code: `def subsets_with_dup(nums):
     nums.sort()
     result = []
@@ -551,6 +699,11 @@ def ladder_length(begin_word, end_word, word_list):
   'combination-sum-ii': {
     approach: 'Sort, backtrack using each item once, skipping same-level duplicates.',
     complexity: 'O(2^n) time, O(n) space',
+    explanation: [
+      'Sort candidates to group duplicates.',
+      'Recurse at i+1 so each item used once.',
+      'Skip same-level repeats; break when too big.',
+    ],
     code: `def combination_sum2(candidates, target):
     candidates.sort()
     result = []
@@ -574,6 +727,11 @@ def ladder_length(begin_word, end_word, word_list):
   'word-search': {
     approach: 'DFS from each cell, marking visited in-place and backtracking.',
     complexity: 'O(m*n*4^L) time, O(L) space',
+    explanation: [
+      'Match characters along a DFS path.',
+      'Mark visited cells to avoid reuse.',
+      'Restore the cell on backtrack.',
+    ],
     code: `def exist(board, word):
     rows, cols = len(board), len(board[0])
 
@@ -598,6 +756,11 @@ def ladder_length(begin_word, end_word, word_list):
   'palindrome-partitioning': {
     approach: 'Backtrack cutting prefixes that are palindromes, recursing on the rest.',
     complexity: 'O(n * 2^n) time, O(n) space',
+    explanation: [
+      'Try each prefix from the current start.',
+      'If a prefix is a palindrome, recurse beyond it.',
+      'Record the cut list when start hits end.',
+    ],
     code: `def partition(s):
     result = []
 
@@ -625,6 +788,11 @@ def ladder_length(begin_word, end_word, word_list):
   'letter-combinations-of-a-phone-number': {
     approach: 'Backtrack over digit-to-letters mapping building each combination.',
     complexity: 'O(4^n * n) time, O(n) space',
+    explanation: [
+      'Map each digit to its phone letters.',
+      'Append one letter per digit, recursing.',
+      'Save the string when all digits used.',
+    ],
     code: `def letter_combinations(digits):
     if not digits:
         return []
@@ -647,6 +815,12 @@ def ladder_length(begin_word, end_word, word_list):
   'n-queens': {
     approach: 'Backtrack column by column tracking used columns and both diagonals.',
     complexity: 'O(n!) time, O(n) space',
+    explanation: [
+      'Place one queen per row.',
+      'Skip columns or diagonals already attacked.',
+      'Record board when all rows filled.',
+      'Undo placement to backtrack.',
+    ],
     code: `def solve_n_queens(n):
     result = []
     cols = set()
@@ -679,6 +853,11 @@ def ladder_length(begin_word, end_word, word_list):
   'climbing-stairs': {
     approach: 'Bottom-up DP; each step equals the sum of the previous two (Fibonacci).',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Ways to a step sum the previous two.',
+      'Track only the last two values.',
+      'Roll them forward n times.',
+    ],
     code: `def climb_stairs(n):
     a, b = 1, 1
     for _ in range(n):
@@ -688,6 +867,11 @@ def ladder_length(begin_word, end_word, word_list):
   'min-cost-climbing-stairs': {
     approach: 'DP where each step cost is its own plus the cheaper of the prior two.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Cheapest reach is min of prior two plus cost.',
+      'Keep two rolling totals.',
+      'Final value is the cheapest to the top.',
+    ],
     code: `def min_cost_climbing_stairs(cost):
     prev = curr = 0
     for i in range(2, len(cost) + 1):
@@ -697,6 +881,11 @@ def ladder_length(begin_word, end_word, word_list):
   'house-robber': {
     approach: 'DP: at each house take max of skipping or robbing it plus two back.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Best so far is max of skip or rob.',
+      'Robbing adds value to two-back total.',
+      'Carry two rolling maxima forward.',
+    ],
     code: `def rob(nums):
     prev = curr = 0
     for num in nums:
@@ -706,6 +895,12 @@ def ladder_length(begin_word, end_word, word_list):
   'house-robber-ii': {
     approach: 'Run linear house robber twice, excluding either the first or last house.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Houses form a circle, so ends conflict.',
+      'Rob the line without the first house.',
+      'Rob the line without the last house.',
+      'Answer is the better of the two runs.',
+    ],
     code: `def rob(nums):
     if len(nums) == 1:
         return nums[0]
@@ -721,6 +916,12 @@ def ladder_length(begin_word, end_word, word_list):
   'coin-change': {
     approach: 'Unbounded knapsack DP over amounts, minimizing coins for each value.',
     complexity: 'O(amount * coins) time, O(amount) space',
+    explanation: [
+      'dp[v] is fewest coins making value v.',
+      'For each value, try every coin.',
+      'Take one plus the remainder subproblem.',
+      'Return dp[amount], or -1 if unreachable.',
+    ],
     code: `def coin_change(coins, amount):
     dp = [0] + [float('inf')] * amount
     for value in range(1, amount + 1):
@@ -732,6 +933,12 @@ def ladder_length(begin_word, end_word, word_list):
   'longest-increasing-subsequence': {
     approach: 'Patience sorting: binary-search each value into a tails array.',
     complexity: 'O(n log n) time, O(n) space',
+    explanation: [
+      'Tails holds smallest end per length.',
+      'Binary-search each number into tails.',
+      'Append to extend, else overwrite.',
+      'Length of tails is the answer.',
+    ],
     code: `import bisect
 
 def length_of_lis(nums):
@@ -747,6 +954,12 @@ def length_of_lis(nums):
   'longest-common-subsequence': {
     approach: '2D DP comparing prefixes; extend on match else take the better side.',
     complexity: 'O(m*n) time, O(n) space',
+    explanation: [
+      'Compare prefixes of both strings.',
+      'On a match, extend the diagonal.',
+      'Otherwise take the better neighbor.',
+      'Keep only the previous row.',
+    ],
     code: `def longest_common_subsequence(text1, text2):
     prev = [0] * (len(text2) + 1)
     for i in range(1, len(text1) + 1):
@@ -762,6 +975,11 @@ def length_of_lis(nums):
   'word-break': {
     approach: 'DP where dp[i] is true if some word ends at i with dp[start] true.',
     complexity: 'O(n^2) time, O(n) space',
+    explanation: [
+      'dp[i] true if prefix of length i splits.',
+      'Look for a break point j with a word after.',
+      'Answer is dp at the full length.',
+    ],
     code: `def word_break(s, word_dict):
     words = set(word_dict)
     dp = [True] + [False] * len(s)
@@ -775,6 +993,11 @@ def length_of_lis(nums):
   'decode-ways': {
     approach: 'DP counting decodings: combine single-digit and valid two-digit options.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Add prior count if single digit valid.',
+      'Add two-back count if pair in 10 to 26.',
+      'Roll two counts forward.',
+    ],
     code: `def num_decodings(s):
     if not s or s[0] == '0':
         return 0
@@ -791,6 +1014,11 @@ def length_of_lis(nums):
   'unique-paths': {
     approach: 'DP row reduction summing left and above; equals a binomial coefficient.',
     complexity: 'O(m*n) time, O(n) space',
+    explanation: [
+      'Each cell sums paths from left and above.',
+      'Reuse one row, adding the left neighbor.',
+      'Last entry is the total paths.',
+    ],
     code: `def unique_paths(m, n):
     row = [1] * n
     for _ in range(1, m):
@@ -801,6 +1029,11 @@ def length_of_lis(nums):
   'triangle': {
     approach: 'Bottom-up DP collapsing each row into the minimum path sums below.',
     complexity: 'O(n^2) time, O(n) space',
+    explanation: [
+      'Start dp from the bottom row.',
+      'Each cell adds the smaller child below.',
+      'Apex holds the minimum total.',
+    ],
     code: `def minimum_total(triangle):
     dp = triangle[-1][:]
     for row in range(len(triangle) - 2, -1, -1):
@@ -811,6 +1044,11 @@ def length_of_lis(nums):
   'perfect-squares': {
     approach: 'DP: fewest squares for n is one plus the best over each square subtracted.',
     complexity: 'O(n * sqrt(n)) time, O(n) space',
+    explanation: [
+      'dp[i] is fewest squares summing to i.',
+      'Try subtracting each square j*j.',
+      'Take one plus the best remainder.',
+    ],
     code: `def num_squares(n):
     dp = [0] + [float('inf')] * n
     for i in range(1, n + 1):
@@ -823,6 +1061,11 @@ def length_of_lis(nums):
   'target-sum': {
     approach: 'Reduce to subset-sum count: find subsets summing to (total+target)/2.',
     complexity: 'O(n * sum) time, O(sum) space',
+    explanation: [
+      'Positives must sum to (total+target)/2.',
+      'Bail if that target is invalid.',
+      'Count subsets via 0/1 knapsack DP.',
+    ],
     code: `def find_target_sum_ways(nums, target):
     total = sum(nums)
     if abs(target) > total or (total + target) % 2 != 0:
@@ -837,6 +1080,11 @@ def length_of_lis(nums):
   'partition-equal-subset-sum': {
     approach: 'Subset-sum DP checking if half the total is reachable (0/1 knapsack).',
     complexity: 'O(n * sum) time, O(sum) space',
+    explanation: [
+      'Odd total can never split evenly.',
+      'Track all reachable subset sums in a set.',
+      'Succeed if half the total is reachable.',
+    ],
     code: `def can_partition(nums):
     total = sum(nums)
     if total % 2 != 0:
@@ -852,6 +1100,12 @@ def length_of_lis(nums):
   'best-time-to-buy-and-sell-stock-with-cooldown': {
     approach: 'State DP tracking hold, sold, and rest values transitioning each day.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Track hold, sold, and rest states.',
+      'Selling forces a rest day before buying.',
+      'Update each state from the prior day.',
+      'Answer is best of sold and rest.',
+    ],
     code: `def max_profit(prices):
     hold = float('-inf')
     sold = 0
@@ -866,6 +1120,11 @@ def length_of_lis(nums):
   'coin-change-2': {
     approach: 'Unbounded knapsack counting combinations by iterating coins outermost.',
     complexity: 'O(amount * coins) time, O(amount) space',
+    explanation: [
+      'dp[v] counts combinations making value v.',
+      'Loop coins outermost to avoid duplicate orders.',
+      'Add ways from the value minus the coin.',
+    ],
     code: `def change(amount, coins):
     dp = [1] + [0] * amount
     for coin in coins:
@@ -876,6 +1135,12 @@ def length_of_lis(nums):
   'edit-distance': {
     approach: '2D DP over prefixes taking the cheapest insert, delete, or replace.',
     complexity: 'O(m*n) time, O(n) space',
+    explanation: [
+      'Compare prefixes of both words.',
+      'Equal chars carry the diagonal cost.',
+      'Else add one to the cheapest of three.',
+      'Keep just the previous row.',
+    ],
     code: `def min_distance(word1, word2):
     prev = list(range(len(word2) + 1))
     for i in range(1, len(word1) + 1):
@@ -893,6 +1158,11 @@ def length_of_lis(nums):
   'single-number': {
     approach: 'XOR all numbers; pairs cancel leaving the unique element.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'XOR is its own inverse.',
+      'Duplicate pairs cancel to zero.',
+      'The lone number survives.',
+    ],
     code: `def single_number(nums):
     result = 0
     for num in nums:
@@ -902,6 +1172,11 @@ def length_of_lis(nums):
   'number-of-1-bits': {
     approach: 'Repeatedly clear the lowest set bit with n & (n-1), counting steps.',
     complexity: 'O(set bits) time, O(1) space',
+    explanation: [
+      'n & (n-1) clears the lowest set bit.',
+      'Count one per clearing.',
+      'Loop until n becomes zero.',
+    ],
     code: `def hamming_weight(n):
     count = 0
     while n:
@@ -912,6 +1187,11 @@ def length_of_lis(nums):
   'counting-bits': {
     approach: 'DP: bits[i] equals bits[i >> 1] plus the lowest bit of i.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Dropping the last bit halves the number.',
+      'Bits of i equal bits of i>>1 plus i&1.',
+      'Fill the table bottom up.',
+    ],
     code: `def count_bits(n):
     dp = [0] * (n + 1)
     for i in range(1, n + 1):
@@ -921,6 +1201,11 @@ def length_of_lis(nums):
   'reverse-bits': {
     approach: 'Shift result left and append the lowest input bit over 32 iterations.',
     complexity: 'O(1) time, O(1) space',
+    explanation: [
+      'Shift result left to make room.',
+      'Append the lowest input bit.',
+      'Shift input right, repeat 32 times.',
+    ],
     code: `def reverse_bits(n):
     result = 0
     for _ in range(32):
@@ -931,6 +1216,11 @@ def length_of_lis(nums):
   'missing-number': {
     approach: 'XOR all indices and values; the unmatched one is the missing number.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Start result at n.',
+      'XOR each index with its value.',
+      'Matched pairs cancel; missing one remains.',
+    ],
     code: `def missing_number(nums):
     result = len(nums)
     for i, num in enumerate(nums):
@@ -940,6 +1230,12 @@ def length_of_lis(nums):
   'sum-of-two-integers': {
     approach: 'Add without operators: XOR sums bits, AND-shift carries, mask to 32 bits.',
     complexity: 'O(1) time, O(1) space',
+    explanation: [
+      'XOR adds bits without carrying.',
+      'AND then shift gives the carry.',
+      'Repeat until carry is zero.',
+      'Mask and sign-correct to 32 bits.',
+    ],
     code: `def get_sum(a, b):
     mask = 0xFFFFFFFF
     while b & mask:
@@ -952,6 +1248,12 @@ def length_of_lis(nums):
   'plus-one': {
     approach: 'Scan right to left adding one, propagating carry; prepend if it overflows.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Scan digits from the right.',
+      'A digit under 9 just increments and returns.',
+      'Nines reset to zero and carry left.',
+      'Prepend a 1 if all were nines.',
+    ],
     code: `def plus_one(digits):
     for i in range(len(digits) - 1, -1, -1):
         if digits[i] < 9:
@@ -963,6 +1265,11 @@ def length_of_lis(nums):
   'powx-n': {
     approach: 'Fast exponentiation by squaring; invert the base for negative exponents.',
     complexity: 'O(log n) time, O(1) space',
+    explanation: [
+      'Negative exponent inverts the base.',
+      'Multiply result when current bit is set.',
+      'Square base and shift exponent right.',
+    ],
     code: `def my_pow(x, n):
     if n < 0:
         x = 1 / x

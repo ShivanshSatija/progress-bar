@@ -4,6 +4,11 @@ export const PART2 = {
   'min-stack': {
     approach: 'Keep a parallel stack of running minimums alongside the value stack.',
     complexity: 'O(1) time per op, O(n) space',
+    explanation: [
+      'Track values and running minimums in two stacks.',
+      'On push, store min of value and current min.',
+      'getMin reads the top of the mins stack.',
+    ],
     code: `class MinStack:
     def __init__(self):
         self.stack = []
@@ -27,6 +32,11 @@ export const PART2 = {
   'evaluate-reverse-polish-notation': {
     approach: 'Push operands; on an operator pop two and push the result.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Push each number onto the stack.',
+      'On operator, pop two and apply it.',
+      'Push the result; final stack top is the answer.',
+    ],
     code: `def eval_rpn(tokens):
     stack = []
     ops = {"+", "-", "*", "/"}
@@ -49,6 +59,12 @@ export const PART2 = {
   'generate-parentheses': {
     approach: 'Backtrack adding "(" while open < n and ")" while close < open.',
     complexity: 'O(4^n / sqrt(n)) time and space',
+    explanation: [
+      'Backtrack building the string character by character.',
+      'Add open paren while open count below n.',
+      'Add close paren only while close below open.',
+      'Record the string when length reaches 2n.',
+    ],
     code: `def generate_parenthesis(n):
     res = []
     cur = []
@@ -72,6 +88,11 @@ export const PART2 = {
   'daily-temperatures': {
     approach: 'Monotonic decreasing stack of indices; resolve spans when a warmer day appears.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Keep a stack of indices with decreasing temps.',
+      'When a warmer day arrives, pop waiting indices.',
+      'Record the day gap for each popped index.',
+    ],
     code: `def daily_temperatures(temperatures):
     res = [0] * len(temperatures)
     stack = []  # indices with decreasing temps
@@ -85,6 +106,11 @@ export const PART2 = {
   'car-fleet': {
     approach: 'Sort cars by position descending; a slower car ahead absorbs faster ones behind into one fleet.',
     complexity: 'O(n log n) time, O(n) space',
+    explanation: [
+      'Sort cars by position closest to target first.',
+      'Compute each car time to reach the target.',
+      'A new fleet forms when a car is slower.',
+    ],
     code: `def car_fleet(target, position, speed):
     pairs = sorted(zip(position, speed), reverse=True)
     fleets = 0
@@ -99,6 +125,12 @@ export const PART2 = {
   'largest-rectangle-in-histogram': {
     approach: 'Monotonic increasing stack; pop and compute area when a shorter bar arrives.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Keep an increasing stack of start index and height.',
+      'On a shorter bar, pop and compute its area.',
+      'Reuse the popped start as the new bar start.',
+      'Flush remaining bars extending to the end.',
+    ],
     code: `def largest_rectangle_area(heights):
     stack = []  # (start_index, height)
     max_area = 0
@@ -119,6 +151,11 @@ export const PART2 = {
   'implement-queue-using-stacks': {
     approach: 'Two stacks; push to in-stack, lazily transfer to out-stack for pop/peek.',
     complexity: 'O(1) amortized per op, O(n) space',
+    explanation: [
+      'Push always goes onto the in-stack.',
+      'When out-stack empty, pour in-stack into it reversed.',
+      'Pop and peek take from the out-stack top.',
+    ],
     code: `class MyQueue:
     def __init__(self):
         self.in_stack = []
@@ -146,6 +183,11 @@ export const PART2 = {
   'implement-stack-using-queues': {
     approach: 'Single queue; after each push, rotate the queue so the newest element is at the front.',
     complexity: 'O(n) push, O(1) pop/top, O(n) space',
+    explanation: [
+      'Append the new element to the queue.',
+      'Rotate older elements behind it via popleft/append.',
+      'Front of queue is now the newest element.',
+    ],
     code: `from collections import deque
 
 class MyStack:
@@ -169,6 +211,11 @@ class MyStack:
   'number-of-recent-calls': {
     approach: 'Keep a queue of timestamps; evict any older than t-3000 before counting.',
     complexity: 'O(1) amortized per call, O(n) space',
+    explanation: [
+      'Append the new timestamp to the queue.',
+      'Pop front timestamps older than t minus 3000.',
+      'Return the queue length as the count.',
+    ],
     code: `from collections import deque
 
 class RecentCounter:
@@ -186,6 +233,12 @@ class RecentCounter:
   'reverse-linked-list': {
     approach: 'Iteratively reverse next pointers with a prev cursor.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Start prev at None, walk the list.',
+      'Save next, point current node back at prev.',
+      'Advance prev and head one step each.',
+      'Return prev as the new head.',
+    ],
     code: `# Definition: class ListNode: def __init__(self, val=0, next=None): ...
 def reverse_list(head):
     prev = None
@@ -199,6 +252,12 @@ def reverse_list(head):
   'merge-two-sorted-lists': {
     approach: 'Splice nodes from the smaller head onto a dummy tail until one list ends.',
     complexity: 'O(n + m) time, O(1) space',
+    explanation: [
+      'Use a dummy node and a tail pointer.',
+      'Attach the smaller head, advance that list.',
+      'Append the leftover list when one ends.',
+      'Return dummy.next as the merged head.',
+    ],
     code: `# Definition: class ListNode: def __init__(self, val=0, next=None): ...
 def merge_two_lists(list1, list2):
     dummy = tail = ListNode()
@@ -216,6 +275,11 @@ def merge_two_lists(list1, list2):
   'linked-list-cycle': {
     approach: 'Floyd fast/slow pointers; they meet iff a cycle exists.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Move slow one step, fast two steps.',
+      'If they ever meet, a cycle exists.',
+      'If fast hits None, the list is acyclic.',
+    ],
     code: `# Definition: class ListNode: def __init__(self, val=0, next=None): ...
 def has_cycle(head):
     slow = fast = head
@@ -229,6 +293,11 @@ def has_cycle(head):
   'middle-of-the-linked-list': {
     approach: 'Advance fast two steps per slow step; slow lands on the (second) middle.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Move slow one step, fast two steps.',
+      'When fast reaches the end, slow is centered.',
+      'Return slow, the middle node.',
+    ],
     code: `# Definition: class ListNode: def __init__(self, val=0, next=None): ...
 def middle_node(head):
     slow = fast = head
@@ -240,6 +309,12 @@ def middle_node(head):
   'remove-nth-node-from-end-of-list': {
     approach: 'Two pointers n apart; advance both until the lead hits the end, then unlink.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Use a dummy and advance lead n steps.',
+      'Move lead and lag until lead reaches end.',
+      'Lag now sits before the target node.',
+      'Unlink by skipping lag.next.',
+    ],
     code: `# Definition: class ListNode: def __init__(self, val=0, next=None): ...
 def remove_nth_from_end(head, n):
     dummy = ListNode(0, head)
@@ -255,6 +330,12 @@ def remove_nth_from_end(head, n):
   'add-two-numbers': {
     approach: 'Walk both lists adding digits with a carry into a new list.',
     complexity: 'O(max(n, m)) time, O(max(n, m)) space',
+    explanation: [
+      'Walk both lists while a carry remains.',
+      'Sum the two digits plus the carry.',
+      'divmod gives the new carry and digit.',
+      'Append each digit to a result list.',
+    ],
     code: `# Definition: class ListNode: def __init__(self, val=0, next=None): ...
 def add_two_numbers(l1, l2):
     dummy = tail = ListNode()
@@ -272,6 +353,11 @@ def add_two_numbers(l1, l2):
   'reorder-list': {
     approach: 'Find the middle, reverse the second half, then weave the two halves together.',
     complexity: 'O(n) time, O(1) space',
+    explanation: [
+      'Find the middle with fast/slow pointers.',
+      'Reverse the second half in place.',
+      'Weave nodes alternately from both halves.',
+    ],
     code: `# Definition: class ListNode: def __init__(self, val=0, next=None): ...
 def reorder_list(head):
     # find middle
@@ -296,6 +382,11 @@ def reorder_list(head):
   'copy-list-with-random-pointer': {
     approach: 'Interleave cloned nodes after originals to wire random pointers, then split.',
     complexity: 'O(n) time, O(1) extra space',
+    explanation: [
+      'Insert each clone right after its original.',
+      'Set clone randoms using the interleaved layout.',
+      'Unzip the two lists back apart.',
+    ],
     code: `# Definition: class Node: def __init__(self, x, next=None, random=None): ...
 def copy_random_list(head):
     if not head:
@@ -325,6 +416,11 @@ def copy_random_list(head):
   'lru-cache': {
     approach: 'Hash map of keys to nodes in a doubly linked list; move-to-front on use, evict the tail.',
     complexity: 'O(1) time per op, O(capacity) space',
+    explanation: [
+      'Map keys to nodes in a doubly linked list.',
+      'On access, remove the node and add it front.',
+      'On put over capacity, evict the tail node.',
+    ],
     code: `class Node:
     def __init__(self, key=0, val=0):
         self.key = key
@@ -373,6 +469,11 @@ class LRUCache:
   'merge-k-sorted-lists': {
     approach: 'Min-heap of list heads; pop the smallest and push its successor.',
     complexity: 'O(N log k) time, O(k) space',
+    explanation: [
+      'Push each list head into a min-heap.',
+      'Pop the smallest node, append it to result.',
+      'Push that node successor back into the heap.',
+    ],
     code: `import heapq
 # Definition: class ListNode: def __init__(self, val=0, next=None): ...
 def merge_k_lists(lists):
@@ -394,6 +495,12 @@ def merge_k_lists(lists):
   'binary-search': {
     approach: 'Classic halving search over a sorted array with inclusive bounds.',
     complexity: 'O(log n) time, O(1) space',
+    explanation: [
+      'Keep inclusive lo and hi bounds.',
+      'Check the middle element each step.',
+      'Move toward the half that may hold target.',
+      'Return -1 if the range empties.',
+    ],
     code: `def search(nums, target):
     lo, hi = 0, len(nums) - 1
     while lo <= hi:
@@ -409,6 +516,11 @@ def merge_k_lists(lists):
   'search-insert-position': {
     approach: 'Binary search for the leftmost index where target could be inserted.',
     complexity: 'O(log n) time, O(1) space',
+    explanation: [
+      'Search half-open range zero to length.',
+      'Shrink toward the leftmost valid index.',
+      'lo settles on the insertion position.',
+    ],
     code: `def search_insert(nums, target):
     lo, hi = 0, len(nums)
     while lo < hi:
@@ -422,6 +534,11 @@ def merge_k_lists(lists):
   'sqrtx': {
     approach: 'Binary search the largest m with m*m <= x.',
     complexity: 'O(log x) time, O(1) space',
+    explanation: [
+      'Binary search candidate roots from 0 to x.',
+      'If mid squared fits, record it and go higher.',
+      'Otherwise go lower; return the best recorded.',
+    ],
     code: `def my_sqrt(x):
     lo, hi = 0, x
     ans = 0
@@ -437,6 +554,11 @@ def merge_k_lists(lists):
   'search-a-2d-matrix': {
     approach: 'Treat the matrix as one sorted array and binary search by flattened index.',
     complexity: 'O(log(m*n)) time, O(1) space',
+    explanation: [
+      'Treat the grid as one flattened sorted array.',
+      'Map a flat index to row and column.',
+      'Binary search that virtual array for target.',
+    ],
     code: `def search_matrix(matrix, target):
     rows, cols = len(matrix), len(matrix[0])
     lo, hi = 0, rows * cols - 1
@@ -454,6 +576,12 @@ def merge_k_lists(lists):
   'find-first-and-last-position-of-element-in-sorted-array': {
     approach: 'Two binary searches for the left and right bounds of the target.',
     complexity: 'O(log n) time, O(1) space',
+    explanation: [
+      'A helper finds the left or right boundary.',
+      'Run it once for the first occurrence.',
+      'Run it again for the last occurrence.',
+      'Return -1, -1 when target is absent.',
+    ],
     code: `def search_range(nums, target):
     def bound(left):
         lo, hi = 0, len(nums)
@@ -474,6 +602,12 @@ def merge_k_lists(lists):
   'search-in-rotated-sorted-array': {
     approach: 'Binary search; one half is always sorted, decide which side to keep.',
     complexity: 'O(log n) time, O(1) space',
+    explanation: [
+      'Find which half is sorted around mid.',
+      'If target lies in the sorted half, search there.',
+      'Otherwise search the other half.',
+      'Return -1 when the range empties.',
+    ],
     code: `def search(nums, target):
     lo, hi = 0, len(nums) - 1
     while lo <= hi:
@@ -495,6 +629,11 @@ def merge_k_lists(lists):
   'koko-eating-bananas': {
     approach: 'Binary search the smallest eating speed that finishes within h hours.',
     complexity: 'O(n log max_pile) time, O(1) space',
+    explanation: [
+      'Binary search the eating speed candidates.',
+      'Compute hours needed at each trial speed.',
+      'Keep slower speeds that still finish in time.',
+    ],
     code: `import math
 def min_eating_speed(piles, h):
     def hours(speed):
@@ -512,6 +651,11 @@ def min_eating_speed(piles, h):
   'find-peak-element': {
     approach: 'Binary search toward the higher neighbor; an uphill edge always leads to a peak.',
     complexity: 'O(log n) time, O(1) space',
+    explanation: [
+      'Compare mid with its right neighbor.',
+      'Climb uphill toward the larger side.',
+      'lo converges on a peak index.',
+    ],
     code: `def find_peak_element(nums):
     lo, hi = 0, len(nums) - 1
     while lo < hi:
@@ -525,6 +669,12 @@ def min_eating_speed(piles, h):
   'median-of-two-sorted-arrays': {
     approach: 'Binary search a partition of the smaller array so left halves hold exactly half the elements.',
     complexity: 'O(log(min(n, m))) time, O(1) space',
+    explanation: [
+      'Binary search a partition of the smaller array.',
+      'Pair it so left halves hold half the elements.',
+      'Adjust until left maxes are below right mins.',
+      'Combine boundary values for the median.',
+    ],
     code: `def find_median_sorted_arrays(nums1, nums2):
     if len(nums1) > len(nums2):
         nums1, nums2 = nums2, nums1
@@ -552,6 +702,11 @@ def min_eating_speed(piles, h):
   'maximum-depth-of-binary-tree': {
     approach: 'Recurse and return 1 plus the max depth of the two subtrees.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Empty subtree contributes depth zero.',
+      'Recurse on both children for their depths.',
+      'Return one plus the larger child depth.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def max_depth(root):
     if not root:
@@ -561,6 +716,11 @@ def max_depth(root):
   'invert-binary-tree': {
     approach: 'Swap left and right children recursively.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Stop at a null node.',
+      'Swap the inverted left and right subtrees.',
+      'Return the node after swapping.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def invert_tree(root):
     if not root:
@@ -571,6 +731,11 @@ def invert_tree(root):
   'same-tree': {
     approach: 'Recursively compare node values and matching subtree structure.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Two nulls count as matching.',
+      'Mismatch if one is null or values differ.',
+      'Recurse on left and right children together.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def is_same_tree(p, q):
     if not p and not q:
@@ -582,6 +747,11 @@ def is_same_tree(p, q):
   'subtree-of-another-tree': {
     approach: 'For each node, check if the subtree rooted there equals subRoot.',
     complexity: 'O(n*m) time, O(h) space',
+    explanation: [
+      'A same helper checks full tree equality.',
+      'At each node test equality with subRoot.',
+      'Otherwise recurse into left and right children.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def is_subtree(root, sub_root):
     def same(a, b):
@@ -602,6 +772,11 @@ def is_subtree(root, sub_root):
   'diameter-of-binary-tree': {
     approach: 'Post-order DFS returning height while tracking the max left+right path.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Recurse computing each node height.',
+      'Path through node is left plus right height.',
+      'Track the largest such path as best.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def diameter_of_binary_tree(root):
     best = 0
@@ -621,6 +796,11 @@ def diameter_of_binary_tree(root):
   'balanced-binary-tree': {
     approach: 'Post-order DFS returning height, short-circuiting with -1 when unbalanced.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Recurse returning subtree heights.',
+      'Return -1 once any subtree is unbalanced.',
+      'Tree is balanced if height stays non-negative.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def is_balanced(root):
     def height(node):
@@ -641,6 +821,11 @@ def is_balanced(root):
   'path-sum': {
     approach: 'DFS subtracting node values; succeed when a leaf hits the remaining target.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Subtract the node value from the target.',
+      'At a leaf, succeed if remainder equals leaf.',
+      'Recurse into either child otherwise.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def has_path_sum(root, target_sum):
     if not root:
@@ -653,6 +838,11 @@ def has_path_sum(root, target_sum):
   'binary-tree-level-order-traversal': {
     approach: 'BFS level by level, collecting each queue snapshot.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Use a queue seeded with the root.',
+      'Process one full level per outer loop.',
+      'Enqueue children while collecting values.',
+    ],
     code: `from collections import deque
 # Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def level_order(root):
@@ -675,6 +865,11 @@ def level_order(root):
   'binary-tree-zigzag-level-order-traversal': {
     approach: 'BFS level order, reversing every other level before appending.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'BFS collecting each level normally.',
+      'Reverse the level on alternating rows.',
+      'Flip the direction flag after each level.',
+    ],
     code: `from collections import deque
 # Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def zigzag_level_order(root):
@@ -699,6 +894,11 @@ def zigzag_level_order(root):
   'binary-tree-right-side-view': {
     approach: 'BFS per level, taking the last node seen on each level.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'BFS level by level using a queue.',
+      'Record only the last node of each level.',
+      'Those rightmost nodes form the side view.',
+    ],
     code: `from collections import deque
 # Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def right_side_view(root):
@@ -721,6 +921,11 @@ def right_side_view(root):
   'count-good-nodes-in-binary-tree': {
     approach: 'DFS carrying the max value on the path; count nodes >= that max.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Carry the max value seen on the path.',
+      'Count the node if it is at least that max.',
+      'Recurse passing down the updated max.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def good_nodes(root):
     def dfs(node, max_so_far):
@@ -737,6 +942,12 @@ def good_nodes(root):
   'lowest-common-ancestor-of-a-binary-tree': {
     approach: 'DFS; the node where p and q split (or which is one of them) is the LCA.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Return the node if it matches p or q.',
+      'Recurse into both subtrees for results.',
+      'If both sides return, this node is the LCA.',
+      'Otherwise bubble up the non-null side.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def lowest_common_ancestor(root, p, q):
     if not root or root is p or root is q:
@@ -750,6 +961,12 @@ def lowest_common_ancestor(root, p, q):
   'construct-binary-tree-from-preorder-and-inorder-traversal': {
     approach: 'Preorder gives roots in order; an inorder index map locates each split in O(1).',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Map each value to its inorder index.',
+      'Take preorder values in order as roots.',
+      'Split inorder at the root for the subtrees.',
+      'Recurse to build left then right.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def build_tree(preorder, inorder):
     idx = {v: i for i, v in enumerate(inorder)}
@@ -771,6 +988,12 @@ def build_tree(preorder, inorder):
   'binary-tree-maximum-path-sum': {
     approach: 'Post-order DFS returning best downward gain; track best split at each node.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Compute each child best downward gain.',
+      'Clamp negative gains to zero.',
+      'Best path through node is value plus both gains.',
+      'Return value plus the larger single branch.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def max_path_sum(root):
     best = float("-inf")
@@ -790,6 +1013,12 @@ def max_path_sum(root):
   'serialize-and-deserialize-binary-tree': {
     approach: 'Preorder DFS with explicit null markers; rebuild by consuming tokens in the same order.',
     complexity: 'O(n) time, O(n) space',
+    explanation: [
+      'Serialize with preorder DFS, marking nulls.',
+      'Join the tokens into a comma string.',
+      'Deserialize by consuming tokens in order.',
+      'Rebuild left then right from the same stream.',
+    ],
     code: `from collections import deque
 # Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 class Codec:
@@ -826,6 +1055,11 @@ class Codec:
   'convert-sorted-array-to-binary-search-tree': {
     approach: 'Recurse on the middle element as root to keep the tree height-balanced.',
     complexity: 'O(n) time, O(log n) space',
+    explanation: [
+      'Pick the middle element as the subtree root.',
+      'Recurse on the left half for the left child.',
+      'Recurse on the right half for the right child.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def sorted_array_to_bst(nums):
     def build(lo, hi):
@@ -842,6 +1076,11 @@ def sorted_array_to_bst(nums):
   'validate-binary-search-tree': {
     approach: 'DFS passing down an open (low, high) range each node must satisfy.',
     complexity: 'O(n) time, O(h) space',
+    explanation: [
+      'Pass an allowed open low-high range down.',
+      'Each value must fall strictly inside it.',
+      'Narrow the range when recursing each side.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def is_valid_bst(root):
     def valid(node, low, high):
@@ -856,6 +1095,12 @@ def is_valid_bst(root):
   'kth-smallest-element-in-a-bst': {
     approach: 'Iterative in-order traversal; the kth popped node is the answer.',
     complexity: 'O(h + k) time, O(h) space',
+    explanation: [
+      'Iterative in-order using an explicit stack.',
+      'Dive left, pushing nodes along the way.',
+      'Each pop is the next smallest value.',
+      'Return when the kth node is popped.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def kth_smallest(root, k):
     stack = []
@@ -873,6 +1118,12 @@ def kth_smallest(root, k):
   'lowest-common-ancestor-of-a-binary-search-tree': {
     approach: 'Walk down: go left/right while both targets are on one side, else split point is the LCA.',
     complexity: 'O(h) time, O(1) space',
+    explanation: [
+      'Walk down from the root comparing values.',
+      'Go left when both targets are smaller.',
+      'Go right when both are larger.',
+      'The split point is the LCA.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def lowest_common_ancestor(root, p, q):
     cur = root
@@ -887,6 +1138,11 @@ def lowest_common_ancestor(root, p, q):
   'insert-into-a-binary-search-tree': {
     approach: 'Walk down comparing values; attach the new leaf at the empty slot.',
     complexity: 'O(h) time, O(1) space',
+    explanation: [
+      'Empty tree becomes a single new node.',
+      'Walk left or right comparing the value.',
+      'Attach the new leaf at the empty slot.',
+    ],
     code: `# Definition: class TreeNode: def __init__(self, val=0, left=None, right=None): ...
 def insert_into_bst(root, val):
     if not root:

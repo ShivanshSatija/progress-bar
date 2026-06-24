@@ -139,16 +139,37 @@ function Solution({ q }) {
         </p>
       )}
 
-      <div className="relative mt-2">
-        <button
-          onClick={copy}
-          className="absolute right-2 top-2 z-10 rounded-md bg-white/10 px-2 py-1 text-[10px] font-semibold text-neutral-200 ring-1 ring-white/15 transition-all hover:bg-white/20"
-        >
-          {copied ? '✓ Copied' : 'Copy'}
-        </button>
-        <pre className="overflow-x-auto rounded-lg bg-neutral-950 p-4 text-[12.5px] leading-relaxed text-neutral-100 ring-1 ring-white/10">
-          <code className="font-mono whitespace-pre">{q.sol.code}</code>
-        </pre>
+      <div className="mt-2 grid gap-3 lg:grid-cols-[1fr_240px]">
+        <div className="relative min-w-0">
+          <button
+            onClick={copy}
+            className="absolute right-2 top-2 z-10 rounded-md bg-white/10 px-2 py-1 text-[10px] font-semibold text-neutral-200 ring-1 ring-white/15 transition-all hover:bg-white/20"
+          >
+            {copied ? '✓ Copied' : 'Copy'}
+          </button>
+          <pre className="overflow-x-auto rounded-lg bg-neutral-950 p-4 text-[12.5px] leading-relaxed text-neutral-100 ring-1 ring-white/10">
+            <code className="font-mono whitespace-pre">{q.sol.code}</code>
+          </pre>
+        </div>
+
+        {q.sol.explanation?.length > 0 && (
+          <div className="rounded-lg bg-black/[0.04] p-3 ring-1 ring-black/5 dark:bg-white/[0.04] dark:ring-white/10">
+            <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              How it works
+            </p>
+            <ul className="space-y-1.5">
+              {q.sol.explanation.map((b, i) => (
+                <li
+                  key={i}
+                  className="flex gap-1.5 text-[11.5px] leading-snug text-slate-600 dark:text-slate-300"
+                >
+                  <span className="select-none text-slate-400">•</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   )
